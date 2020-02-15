@@ -7,10 +7,14 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.employee.timesheet.constants.ApplicationConstants;
+import com.employee.timesheet.dto.ResponseDto;
+import com.employee.timesheet.dto.TimesheetRequestDto;
 import com.employee.timesheet.entity.Employee;
 import com.employee.timesheet.exception.EmployeeNotFoundException;
 import com.employee.timesheet.service.TimesheetService;
@@ -36,4 +40,12 @@ public class TimesheetController {
 		return new ResponseEntity<>(timesheetService.getEmployeeById(employeeId), HttpStatus.OK);
 	}
 
+	@PostMapping
+	public ResponseEntity<ResponseDto> saveTimeSheet(@RequestBody TimesheetRequestDto timesheetRequestDto) throws EmployeeNotFoundException{
+		log.info("Entering into saveTimeSheet of TimesheetController");
+		ResponseDto responseDto=timesheetService.saveTimeSheet(timesheetRequestDto);
+		responseDto.setMessage("Success");
+		responseDto.setStatusCode(HttpStatus.OK.value());
+		return new ResponseEntity<>(responseDto, HttpStatus.OK);
+	}
 }
