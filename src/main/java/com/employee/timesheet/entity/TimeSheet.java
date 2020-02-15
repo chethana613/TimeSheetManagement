@@ -20,7 +20,4 @@ public class TimeSheet {
 	private Date date;
 	private String status;
 	private Integer hours;
-	
-	
-
 }
